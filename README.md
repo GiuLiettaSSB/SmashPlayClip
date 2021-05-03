@@ -1,4 +1,4 @@
-# SmashPlayClip# SmashPlayClip_β
+# SmashPlayClip_β
 
 長時間のスマブラ動画アーカイブから試合開始の瞬間を検出し、半自動で1本の動画から複数の対戦動画を分割し再出力するプログラムです。
 
