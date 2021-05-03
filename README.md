@@ -85,7 +85,7 @@ FFmpegのインストールと環境設定を行います。PowerShell上で実�
 
 ![pic3](readme_pic/pic3.jpg)
 
-6. output内のフォルダは削除されます。出力した動画ファイルは `mylist.txt` に記録されます。
+6. 出力した動画ファイルは `mylist.txt` に記録されます。
 
 
 # 注意
