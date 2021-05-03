@@ -1,39 +1,36 @@
 # > .\commnad.ps1 movie\xxx.mp4
 
-Param($movie) #€шђ”‚Е“®‰жѓpѓX‚рЋж“ѕ
-$moviename = [System.IO.Path]::GetFileNameWithoutExtension($movie) #‰f‘њѓfЃ[ѓ^‚Мѓtѓ@ѓCѓ‹–ј‚рЋж“ѕ
-New-Item output/$moviename -ItemType Directory -Force #ѓVЃ[ѓ“ЊџЏo—pѓtѓHѓ‹ѓ_‚МЌмђ¬
+Param($movie) #еј•ж•°гЃ§е‹•з”»гѓ‘г‚№г‚’еЏ–еѕ—
+$moviename = [System.IO.Path]::GetFileNameWithoutExtension($movie) #ж еѓЏгѓ‡гѓјг‚їгЃ®гѓ•г‚Ўг‚¤гѓ«еђЌг‚’еЏ–еѕ—
+New-Item output/$moviename -ItemType Directory -Force #г‚·гѓјгѓіж¤ње‡єз”Ёгѓ•г‚©гѓ«гѓЂгЃ®дЅњж€ђ
 
-#ѓVЃ[ѓ“ЊџЏo‚М‰ж‘њ‚Ж•¶ЋљѓfЃ[ѓ^‚рЏo—Н
-#default‚Ми‡’l‚Н0.5‚Ж‚µ‚Д‚ў‚йЃB0~1‚М”Н€Н‚ЕђЭ’и‚Є‰В”\‚Е1‚Й‹Я‚Г‚­‚Щ‚ЗЏк–К“]Љ·‚МЊџЏo‚Є‘Ѕ‚­‚И‚й
+#г‚·гѓјгѓіж¤ње‡єгЃ®з”»еѓЏгЃЁж–‡е­—гѓ‡гѓјг‚їг‚’е‡єеЉ›
+#defaultгЃ®й–ѕеЂ¤гЃЇ0.5гЃЁгЃ—гЃ¦гЃ„г‚‹гЂ‚0~1гЃ®зЇ„е›ІгЃ§иЁ­е®љгЃЊеЏЇиѓЅгЃ§1гЃ«иї‘гЃҐгЃЏгЃ»гЃ©е ґйќўи»ўжЏ›гЃ®ж¤ње‡єгЃЊе¤љгЃЏгЃЄг‚‹
 ffmpeg -i $movie -vf "select=gt(scene\,0.5), scale=1280:720,showinfo" -vsync vfr output/$moviename/%04d.jpg -f null - 2>output/ffout.txt 
 
-#“Б’иЏк–К(positive_data‚Й‹Я‚ў‰ж‘њ)‚МЋЇ•К
+#з‰№е®ље ґйќў(positive_dataгЃ«иї‘гЃ„з”»еѓЏ)гЃ®и­е€Ґ
 python get_gamestart_img.py output/$moviename
 
-#ffout‚М•¶ЋљѓRЃ[ѓh‚рUTF-16‚©‚зUTF8‚Й•ПЉ·
+#ffoutгЃ®ж–‡е­—г‚ігѓјгѓ‰г‚’UTF-16гЃ‹г‚‰UTF8гЃ«е¤‰жЏ›
 (get-content -Encoding UTF8 output/ffout.txt) | Set-Content -Encoding UTF8 output/$moviename/ffout.txt
 Remove-Item output/ffout.txt
 
-#ЋиЌм‹Ж‚Е(./output/$moviename/)‚Й‚ ‚й–Ъ“I€ИЉO‚М‰ж‘њ‚рЌнЏњ‚·‚й
-Write-Host "ѓVЃ[ѓ“ЊџЏo‚ЄЏI—№‚µ‚Ь‚µ‚ЅЃB ./output/$moviename/ ‚М’†‚Й‚ ‚й•s—v‚И‰ж‘њ‚НЌнЏњ‚µ‚Д‚­‚ѕ‚і‚ў"
-Write-Host "‰ж‘њ‚МЌнЏњ‚ЄЏI—№‚µЃA“®‰ж‚МђШ‚и”І‚«‚р‚·‚йЏкЌ‡‚Н[y]‚р‰џ‚µ‚Д‚­‚ѕ‚і‚ўЃBЏI—№‚·‚йЏкЌ‡‚Н[n]‚р‰џ‚µ‚Д‚­‚ѕ‚і‚ў"
+#ж‰‹дЅњжҐ­гЃ§(./output/$moviename/)гЃ«гЃ‚г‚‹з›®зљ„д»Ґе¤–гЃ®з”»еѓЏг‚’е‰Љй™¤гЃ™г‚‹
+Write-Host "г‚·гѓјгѓіж¤ње‡єгЃЊзµ‚дє†гЃ—гЃѕгЃ—гЃџгЂ‚ ./output/$moviename/ гЃ®дё­гЃ«гЃ‚г‚‹дёЌи¦ЃгЃЄз”»еѓЏгЃЇе‰Љй™¤гЃ—гЃ¦гЃЏгЃ гЃ•гЃ„"
+Write-Host "з”»еѓЏгЃ®е‰Љй™¤гЃЊзµ‚дє†гЃ—гЂЃе‹•з”»гЃ®е€‡г‚ЉжЉњгЃЌг‚’гЃ™г‚‹е ґеђ€гЃЇ[y]г‚’жЉјгЃ—гЃ¦гЃЏгЃ гЃ•гЃ„гЂ‚зµ‚дє†гЃ™г‚‹е ґеђ€гЃЇ[n]г‚’жЉјгЃ—гЃ¦гЃЏгЃ гЃ•гЃ„"
 $usercheck = Read-Host "[y/n]"
 
-$cnt = 0 #–іЊАѓ‹Ѓ[ѓv‰с”р
+$cnt = 0 #з„Ўй™ђгѓ«гѓјгѓ—е›ћйЃї
 while($cnt -le 10){
     if($usercheck -eq "y"){
         python get_scene_movie.py $movie
         exit
     }
     if($usercheck -eq "n"){
-        Write-Host "Џ€—ќЏI—№"
+        Write-Host "е‡¦зђ†зµ‚дє†"
         exit
     }
     $cnt++
-    Write-Host "‰ж‘њ‚МЌнЏњ‚ЄЏI—№‚µЃA“®‰ж‚МђШ‚и”І‚«‚р‚·‚йЏкЌ‡‚Н[y]‚р‰џ‚µ‚Д‚­‚ѕ‚і‚ўЃBЏI—№‚·‚йЏкЌ‡‚Н[n]‚р‰џ‚µ‚Д‚­‚ѕ‚і‚ў"
+    Write-Host "з”»еѓЏгЃ®е‰Љй™¤гЃЊзµ‚дє†гЃ—гЂЃе‹•з”»гЃ®е€‡г‚ЉжЉњгЃЌг‚’гЃ™г‚‹е ґеђ€гЃЇ[y]г‚’жЉјгЃ—гЃ¦гЃЏгЃ гЃ•гЃ„гЂ‚зµ‚дє†гЃ™г‚‹е ґеђ€гЃЇ[n]г‚’жЉјгЃ—гЃ¦гЃЏгЃ гЃ•гЃ„"
     $usercheck = Read-Host "[y\n]"
 }
-
-#ЋЇ•К‚ЙЋg—p‚µ‚Ѕ‰ж‘њ‚Жffuotѓtѓ@ѓCѓ‹‚рЌнЏњ
-Remove-Item -Path output/$moviename -Recurse -Force
