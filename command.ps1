@@ -5,7 +5,7 @@ $moviename = [System.IO.Path]::GetFileNameWithoutExtension($movie) #映像デー
 New-Item output/$moviename -ItemType Directory -Force #シーン検出用フォルダの作成
 
 #シーン検出の画像と文字データを出力
-#defaultの閾値は0.5としている。0~1の範囲で設定が可能で1に近づくほど場面転換の検出が多くなる
+#defaultの閾値は0.5としている。0~1の範囲で設定が可能で1に近づくほど場面転換の検出が少なくなる
 ffmpeg -i $movie -vf "select=gt(scene\,0.5), scale=1280:720,showinfo" -vsync vfr output/$moviename/%04d.jpg -f null - 2>output/ffout.txt 
 
 #特定場面(positive_dataに近い画像)の識別
