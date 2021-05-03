@@ -62,7 +62,7 @@ def generate_movie(timeList,basename):
     for i in range(len(timeList)-1):
         delta = timeList[i + 1] - timeList[i]
         cmd = 'ffmpeg -ss %s' % timeList[i] + \
-            ' -i movie/' + basename + '.mp4  -vcodec h264_nvenc -b:v 1000k -t %g' % delta + \
+            ' -i movie/' + basename + '.mp4  -vcodec h264_nvenc -b:v 10000k -t %g' % delta + \
             ' movie/' + basename + '/' + basename + '%s.mp4' % i
         print(cmd)
         if not os.path.isdir('movie/'+ basename):
